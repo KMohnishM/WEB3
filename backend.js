@@ -85,6 +85,17 @@ app.delete('/api/company/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+// API to search for a company by name
+app.get('/api/company/name/:name', async (req, res) => {
+    try {
+        const company = await Company.findOne({ name: req.params.name });
+        if (!company) return res.status(404).json({ error: 'Company not found' });
+        res.json(company);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 // Start the server
 const PORT = 5000; // Use a fixed port number
